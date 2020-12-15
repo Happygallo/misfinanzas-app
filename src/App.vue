@@ -1,28 +1,40 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+  <div class="app"> 
+    <div class="header">
+      <nav>
+        <button v-on:click="init"> Iniciar Sesion </button>
+        <button v-on:click="register"> Registrarse </button>
+      </nav>
+    </div> 
+    <div class="main-component">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
-
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  components: {},
+  methods: {
+    init: function(){
+      if(this.$route.name != "startSesion"){
+        this.$router.push({name : "startSesion"})
+      }
+    },
+    register: function(){
+      if(this.$route.name != "register"){
+        this.$router.push({name : "register"})
+      }
+    },
+    beforeCreate: function(){
+      if(this.$route.name != "startSesion"){
+        this.$router.push({name : "startSesion"})
+      }
+    }
   }
-}
+ }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
