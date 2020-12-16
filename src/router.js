@@ -1,7 +1,7 @@
 import vueRouter from 'vue-router'
 import register from './components/Register'
-import startSesion from './components/StartSesion'
-import startComponent from './components/StartComponent'
+import login from './components/Login'
+import welcome from './components/Welcome'
 import App from './App'
 
 const router = new vueRouter({
@@ -12,7 +12,7 @@ const router = new vueRouter({
             path: '/',
             name: "root",
             component:App,
-            redirect: '/startSesion'
+            redirect: '/login'
         },
         {
             path: '/register',
@@ -20,14 +20,14 @@ const router = new vueRouter({
             component: register
         },
         {
-            path: '/startSesion',
-            name: "startSesion",
-            component: startSesion
+            path: '/login',
+            name: "login",
+            component: login
         },
         {
-            path: '/startComponent',
-            name: "startComponent",
-            component: startComponent
+            path: '/welcome',
+            name: "welcome",
+            component: welcome
         },
     ]
 })
