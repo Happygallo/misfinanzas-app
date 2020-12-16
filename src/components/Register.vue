@@ -1,8 +1,8 @@
 <template>
     <div id="register">
         <div id="mensaje">
-            <h1> Registro</h1>
-            <h4> Registrate para empezar a mejorar tus finanzas </h4>
+            <h1>Registro</h1>
+            <h4>Registrate para empezar a mejorar tus finanzas</h4>
         </div>
         <div id="formSesion">
             <form>
@@ -33,11 +33,8 @@
             </form>
         </div>
         <div id="opcion">
-            <p> ¿Ya tienes una cuenta? </p>
-            <router-link :to="'/register'">Ingresar</router-link>
-        </div>
-        <div id="copyright">
-            <p> Copyright (c) Mis Finanzas 2020 </p>
+            <p>¿Ya tienes una cuenta?</p>
+            <router-link :to="'/'">Ingresar</router-link>
         </div>
     </div>
 </template>
