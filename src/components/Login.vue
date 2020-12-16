@@ -1,8 +1,8 @@
 <template>
     <div id="starSesion">
         <div id="mensaje">
-            <h1> Iniciar Sesion</h1>
-            <h4> Inicia sesion para seguir mejorando tus finanzas </h4>
+            <h1>Iniciar Sesión</h1>
+            <h4>Inicia sesión para seguir mejorando tus finanzas</h4>
         </div>
         <div id="formSesion">
             <form>
@@ -33,11 +33,8 @@
             </form>
         </div>
         <div id="opcion">
-            <p> ¿No tienes una cuenta? </p>
+            <p>¿No tienes una cuenta?</p>
             <router-link :to="'/register'">Registrarse</router-link>
-        </div>
-        <div id="copyright">
-            <p> Copyright (c) Mis Finanzas 2020 </p>
         </div>
     </div>
 </template>
