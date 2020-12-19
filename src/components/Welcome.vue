@@ -1,7 +1,7 @@
 <template>
     <div id="starComponent">
-        <div id="mensaje">
-            <h1>Bienvenido {{username}}</h1>
+        <div id="mensaje2">
+            <h1 id="mensajeBienvenida">Bienvenido {{username}}</h1>
         </div>
     </div>
 </template>
@@ -22,7 +22,7 @@ export default {
     created: function(){
             this.username = this.$route.params.username
             let self = this
-            axios.get("https://localhost:8000/users/" + this.username)
+            axios.get("https://api-misfinanzas.herokuapp.com/users/" + this.username)
                 .then((result) => {
                     
                 })
@@ -34,14 +34,14 @@ export default {
 </script>
 
 <style>
-h1 {
+#mensajeBienvenida {
     font-size: 36px;
     font-weight: bold;
     color: white;
     padding: 140px;
 }
 
-#mensaje {
+#mensaje2 {
     text-align: center;
     height: 70vh;
 }
