@@ -104,7 +104,7 @@ nav ul li a.register {
 }
 
 a:hover {
-  opacity: 0.8;
+  opacity: 0.5;
 }
 
 .background {

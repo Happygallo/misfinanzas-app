@@ -2,7 +2,7 @@
   <div id="login">
     <div id="mensaje">
       <h1 class="title">Iniciar Sesión</h1>
-      <h4 class="subtitle">Inicia sesión para seguir mejorando tus finanzas</h4>
+      <h4 id="subtitle">Inicia sesión para seguir mejorando tus finanzas</h4>
     </div>
     <div id="formSesion">
       <form class="form" v-on:submit.prevent="processAuthUser">
@@ -14,7 +14,7 @@
           v-model="user_in.password"
           type="password"
         />
-        <input type="submit" value="Ingresar" />
+        <input type="submit" value="Ingresar" id="enviar"/>
       </form>
     </div>
     <div id="opcion">
@@ -44,8 +44,7 @@ export default {
             axios.post("https://api-misfinanzas.herokuapp.com/users/auth/", self.user_in,  {headers: {}})
                 .then((result) => {
                     //alert("Autenticación Exitosa");
-                    self.$emit('log-in', self.user_in.username)
-                    this.$router.push('/welcome');
+                    this.$router.push('/welcome/' + self.user_in.username);
                 })
                 .catch((error) => {
                     
@@ -83,10 +82,10 @@ h1 .title {
   font-weight: bold;
 }
 
-h4 .subtitle {
+#subtitle {
   font-size: 16px;
   font-weight: 500;
-  opacity: 50%;
+  opacity: 0.5;
   padding-top: 6px;
 }
 
@@ -118,8 +117,8 @@ input[type="submit"] {
   cursor: pointer;
 }
 
-input[type="submit"]:hover {
-  opacity: 60%;
+#enviar:hover {
+  opacity: 0.6;
 }
 
 .form {

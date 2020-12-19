@@ -86,10 +86,10 @@ h1 .title {
   font-weight: bold;
 }
 
-h4 .subtitle {
+.subtitle {
   font-size: 16px;
   font-weight: 500;
-  opacity: 50%;
+  opacity: 0.5;
   padding-top: 6px;
 }
 
@@ -122,7 +122,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-  opacity: 60%;
+  opacity: 0.5;
 }
 
 .form {
