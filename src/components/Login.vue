@@ -5,15 +5,14 @@
       <h4>Inicia sesión para seguir mejorando tus finanzas</h4>
     </div>
     <div id="formSesion">
-      <form class="form">
-        <label for="user">Usuario</label>
-        <input id="user" v-model="name" type="text" name="user" />
+      <form class="form" v-on:submit.prevent="processAuthUser">
+        <label for="username">Usuario</label>
+        <input id="username" v-model="user_in.username" type="text"/>
         <label for="password">Contraseña</label>
         <input
           id="password"
-          v-model="password"
+          v-model="user_in.password"
           type="password"
-          name="password"
         />
         <input type="submit" value="Ingresar" />
       </form>
@@ -26,6 +25,38 @@
   </div>
 </template>
 
+<script>
+import axios from'axios';
+export default {
+  name: 'login',
+  data: function() {
+    return {
+      user_in: {
+                username:"",
+                password:""
+            }
+    }
+  },
+
+  methods: {
+        processAuthUser: function(){
+            var self = this
+            axios.get("http://localhost:8000/users/" + self.user_in.username)
+                .then((result) => {
+                    alert("Autenticación Exitosa");
+                })
+                .catch((error) => {
+                    
+                    if (error.response.status == "404")
+                        alert("ERROR 404: Usuario no encontrado.");
+                    
+                    if (error.response.status == "403")
+                        alert("ERROR 403: Contraseña Erronea.");
+                });
+        }
+    }
+}
+</script>
 
 <style>
 #login {
