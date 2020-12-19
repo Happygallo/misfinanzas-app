@@ -1,37 +1,67 @@
 <template>
-    <div id="register">
-        <div id="mensaje">
-            <h1>Registro</h1>
-            <h4>Registrate para empezar a mejorar tus finanzas</h4>
-        </div>
-        <div id="formSesion">
-            <form class="form">
-                <label for="user">Usuario</label>
-                <input 
-                id="user"
-                v-model= "name"
-                type="text"
-                name="user"
-                >
-                <label for="password">Contraseña</label>
-                <input 
-                id="password"
-                v-model= "password"
-                type="password"
-                name="password"
-                >
-                <input
-                    type="submit"
-                    value="Registrarme"
-                >
-            </form>
-        </div>
-        <div id="opcion">
-            <p>¿Ya tienes una cuenta?</p>
-            <router-link :to="'/'" class="secondButton">Ingresar</router-link>
-        </div>
+  <div id="register">
+    <div id="mensaje">
+      <h1 class="title">Registro</h1>
+      <h4 class="subtitle">Registrate para empezar a mejorar tus finanzas</h4>
     </div>
+    <div id="formSesion">
+      <form class="form" v-on:submit.prevent="register">
+        <label for="user">Usuario</label>
+        <input id="user" v-model="user_in.username" type="text" />
+        <label for="password">Contraseña</label>
+        <input
+          id="password"
+          v-model="user_in.password"
+          type="password"
+          name="password"
+        />
+        <input type="submit" value="Registrarme" />
+      </form>
+    </div>
+    <div id="opcion">
+      <p>¿Ya tienes una cuenta?</p>
+      <router-link :to="'/'" class="secondButton">Ingresar</router-link>
+    </div>
+  </div>
 </template>
+
+<script>
+import axios from "axios";
+export default {
+  name: "login",
+  data: function () {
+    return {
+      user_in: {
+        username: "",
+        password: "",
+      },
+    };
+  },
+
+  methods: {
+    register: function () {
+      var self = this;
+      if (self.user_in.username == "") {
+        alert("Ingrese un usuario");
+      } else if (self.user_in.password == "") {
+        alert("Ingrese una contraseña");
+      } else {
+        axios
+          .post("http://localhost:8000/users/", self.user_in, { headers: {} })
+          .then((result) => {
+            //alert("Autenticación Exitosa");
+            this.$router.push("/login");
+          })
+          .catch((error) => {
+            if (error.response.status == "404") alert("Ingrese un usuario");
+
+            if (error.response.status == "403") alert("Ingrese una contraseña");
+          });
+      }
+    },
+  },
+};
+</script>
 
 <style>
 #register {
@@ -51,12 +81,12 @@
   text-align: center;
 }
 
-h1 {
+h1 .title {
   font-size: 36px;
   font-weight: bold;
 }
 
-h4 {
+h4 .subtitle {
   font-size: 16px;
   font-weight: 500;
   opacity: 50%;

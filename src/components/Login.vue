@@ -1,8 +1,8 @@
 <template>
   <div id="login">
     <div id="mensaje">
-      <h1>Iniciar Sesión</h1>
-      <h4>Inicia sesión para seguir mejorando tus finanzas</h4>
+      <h1 class="title">Iniciar Sesión</h1>
+      <h4 class="subtitle">Inicia sesión para seguir mejorando tus finanzas</h4>
     </div>
     <div id="formSesion">
       <form class="form" v-on:submit.prevent="processAuthUser">
@@ -41,9 +41,11 @@ export default {
   methods: {
         processAuthUser: function(){
             var self = this
-            axios.get("http://localhost:8000/users/" + self.user_in.username)
+            axios.post("http://localhost:8000/users/auth/", self.user_in,  {headers: {}})
                 .then((result) => {
-                    alert("Autenticación Exitosa");
+                    //alert("Autenticación Exitosa");
+                    self.$emit('log-in', self.user_in.username)
+                    this.$router.push('/welcome');
                 })
                 .catch((error) => {
                     
@@ -76,12 +78,12 @@ export default {
   text-align: center;
 }
 
-h1 {
+h1 .title {
   font-size: 36px;
   font-weight: bold;
 }
 
-h4 {
+h4 .subtitle {
   font-size: 16px;
   font-weight: 500;
   opacity: 50%;
