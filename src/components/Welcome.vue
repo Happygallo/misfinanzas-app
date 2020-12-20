@@ -1,9 +1,36 @@
 <template>
     <div id="starComponent">
+        <div class="header">
+            <li><a href="/login">Cerrar Sesión</a></li>
+        </div> 
         <div id="mensaje2">
             <h1 id="mensajeBienvenida">Bienvenido {{username}}</h1>
         </div>
-    </div>
+        <div id="datos">
+        </div>
+        <div id="informacion">
+            <div id="botones">
+                <li><a href="/budget/:username">Presupuesto</a></li>
+                <li><a href="/new_movement/:username">Nuevo Gasto</a></li>
+            </div>
+            <div id="movimientos">
+                 <v-card
+                    class="mx-auto"
+                    max-width="344">
+                        <v-card-text>
+                            <div>
+                                {gasto}
+                                {fecha}
+                            </div>
+                            <div>
+                                <p>Concepto</p>
+                                {concepto}
+                            </div>
+                        </v-card-text>
+                    </v-card>
+            </div>
+        </div>
+    </div>    
 </template>
 
 <script>
