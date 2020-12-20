@@ -1,49 +1,101 @@
 <template>
-  <div id="app">
+  <div id="app" class="app">
+
     <div class="header">
       <nav>
-        <img src="./assets/logo.png" alt="MisFinanzas Logo" class="logo" />
+        <img src="./assets/logo.png" alt="MisFinanzas Logo" class="logo" v-on:click="init"/>
         <ul>
-          <li><a class="login" href="/">Iniciar Sesión</a></li>
-          <li><a class="register" href="/register">Registrarse</a></li>
+          <li><a class="login-menu" v-on:click="init" v-if="is_auth">Iniciar Sesión</a></li>
+          <li><a class="register-menu" v-on:click="register" v-if="is_auth">Registrarse</a></li>
+          <li><a class="logout-menu" v-on:click="logout" v-if="is_auth">Cerrar Sesión</a></li>
         </ul>
       </nav>
     </div>
+
     <div class="main-component">
       <router-view></router-view>
     </div>
+
     <div class="background"></div>
+
     <div class="footer">
-      <div id="copyright">
+      <div class="copyright">
         <p>Copyright (c) Mis Finanzas 2020</p>
+        <p>Proyecto final para el Ciclo 3 de MisiónTIC 2022. Conoce más <a href="https://github.com/Happygallo/misfinanzas-app">aquí</a></p>
       </div>
     </div>
+
   </div>
 </template>
 
+
 <script>
+
+import vueRouter from 'vue-router'
+
 export default {
   name: "App",
-  components: {},
+
+  data: function() {
+    return {
+      is_auth: localStorage.getItem('isAuth') || false
+    }
+  },
+
+  components: {
+
+  },
+
   methods: {
+    //Verifica si el usuario está autenticado, si lo está lo dirige a su página principal y si no a la página de autenticación.
+    updateAuth: function() {
+      var self = thisself.is_auth = localStorage.getItem('isAuth') || false
+
+      if (self.is_auth == false) {
+        self.$router.push({name: "user_auth"})
+      } else {
+        let username = localStorage.getItem("current_username")
+        self.$router.push({name: "user", params: {username: username}})
+      }
+      
+    },
+
+    //Actualiza el localStorage con el usuario autenticado verdadero y su username
+    login: function(username) {
+      localStorage.setItem('current_username')
+      localStorage.setItem('isAuth', true)
+      this.updateAuth()
+    },
+
+    //Elimina de localStorage el usuario autenticado y su username.
+    logout: function() {
+      localStorage.removeItem('isAuth')
+      localStorage.removeItem('current_username')
+      this.updateAuth()
+    },
+
     init: function () {
-      if (this.$route.name != "login") {
-        this.$router.push({ name: "login" });
+      if (this.$route.name != "user") {
+        let username = localStorage.getItem("current_username")
+        this.$router.push({ name: "user", params: {username: username}});
       }
     },
+
     register: function () {
       if (this.$route.name != "register") {
         this.$router.push({ name: "register" });
       }
     },
-    beforeCreate: function () {
-      if (this.$route.name != "welcome") {
-        this.$router.push({ name: "welcome" });
-      }
+
+    //Dirige a root y después verifica si hay un usuario autenticado
+    created: function () {
+      this.$router.push({name: "root"})
+      this.updateAuth()
     },
   },
 };
 </script>
+
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
@@ -92,12 +144,12 @@ nav ul li a {
   border-color: #4a67ff;
 }
 
-nav ul li a.login {
+nav ul li a.login-menu {
   color: #4a67ff;
   background-color: white;
 }
 
-nav ul li a.register {
+nav ul li a.register-menu {
   color: white;
   background-color: #4a67ff;
   font-weight: 500;

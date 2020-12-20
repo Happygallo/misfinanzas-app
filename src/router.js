@@ -1,9 +1,10 @@
 import vueRouter from 'vue-router'
-import register from './components/Register'
-import login from './components/Login'
-import welcome from './components/Welcome'
-import budget from './components/Budget'
-import new_movement from './components/New_movement'
+
+import UserRegister from './components/UserRegister'
+import UserAuth from './components/UserAuth'
+import User from './components/User'
+import UserBudget from './components/UserBudget'
+import UserMovement from './components/UserMovement'
 import App from './App'
 
 const router = new vueRouter({
@@ -13,33 +14,36 @@ const router = new vueRouter({
         {
             path: '/',
             name: "root",
-            component:App,
-            redirect: '/login'
+            component: App,
+            //redirect: '/login'
         },
         {
-            path: '/register',
-            name: "register",
-            component: register
+            path: '/user/register',
+            name: "user_register",
+            component: UserRegister
         },
         {
-            path: '/login',
-            name: "login",
-            component: login
+            path: '/user/auth',
+            name: "user_auth",
+            component: UserAuth
         },
         {
-            path: '/welcome/:username',
-            name: "welcome",
-            component: welcome
+            //path: '/welcome/:username',
+            path: '/user/:username',
+            name: "user",
+            component: User
         },
         {
-            path: '/budget/:username',
-            name: "budget",
-            component: budget
+            //path: '/budget/:username',
+            path: '/user/budget/:username',
+            name: "user_budget",
+            component: UserBudget
         },
         {
-            path: '/new_movement/:username',
-            name: "new_movement",
-            component: new_movement
+            //path: '/new_movement/:username',
+            path: '/user/new_movement/:username',
+            name: "user_movement",
+            component: UserMovement
         }
     ]
 })
