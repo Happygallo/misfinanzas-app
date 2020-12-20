@@ -7,6 +7,36 @@
             <h1 id="mensajeBienvenida">Bienvenido {{username}}</h1>
         </div>
         <div id="datos">
+                    <v-card
+                    class="mx-auto"
+                    max-width="344">
+                        <v-card-text>
+                            <div>
+                                {concepto}
+                                <p>Presupuesto</p>
+                            </div>
+                        </v-card-text>
+                    </v-card>
+                    <v-card
+                    class="mx-auto"
+                    max-width="344">
+                        <v-card-text>
+                            <div>
+                                $ {gastos}
+                                <p>Gastos</p>
+                            </div>
+                        </v-card-text>
+                    </v-card>
+                    <v-card
+                    class="mx-auto"
+                    max-width="344">
+                        <v-card-text>
+                            <div>
+                                $ {restante}
+                                <p>Restante</p>
+                            </div>
+                        </v-card-text>
+                    </v-card>
         </div>
         <div id="informacion">
             <div id="botones">
