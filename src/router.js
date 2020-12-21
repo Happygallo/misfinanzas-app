@@ -15,7 +15,7 @@ const router = new vueRouter({
             path: '/',
             name: "root",
             component: App,
-            //redirect: '/login'
+            redirect: '/user/auth'
         },
         {
             path: '/user/register',

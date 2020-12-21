@@ -1,13 +1,29 @@
 <template>
   <div id="app" class="app">
-
     <div class="header">
       <nav>
-        <img src="./assets/logo.png" alt="MisFinanzas Logo" class="logo" v-on:click="init"/>
+        <img
+          src="./assets/logo.png"
+          alt="MisFinanzas Logo"
+          class="logo"
+          v-on:click="init"
+        />
         <ul>
-          <li><a class="login-menu" v-on:click="init" v-if="!is_auth">Iniciar Sesión</a></li>
-          <li><a class="register-menu" v-on:click="register" v-if="!is_auth">Registrarse</a></li>
-          <li><a class="logout-menu" v-on:click="logout" v-if="is_auth">Cerrar Sesión</a></li>
+          <li>
+            <a class="login-menu" v-on:click="init" v-if="!is_auth"
+              >Iniciar Sesión</a
+            >
+          </li>
+          <li>
+            <a class="register-menu" v-on:click="register" v-if="!is_auth"
+              >Registrarse</a
+            >
+          </li>
+          <li>
+            <a class="logout-menu" v-on:click="logout" v-if="is_auth"
+              >Cerrar Sesión</a
+            >
+          </li>
         </ul>
       </nav>
     </div>
@@ -21,63 +37,64 @@
     <div class="footer">
       <div class="copyright">
         <p>Copyright (c) Mis Finanzas 2020</p>
-        <p id="subtitulo-footer">Proyecto final para el Ciclo 3 de MisiónTIC 2022, conoce más <a href="https://github.com/Happygallo/misfinanzas-app">aquí</a>.</p>
+        <p id="subtitulo-footer">
+          Proyecto final para el Ciclo 3 de MisiónTIC 2022, conoce más
+          <a href="https://github.com/Happygallo/misfinanzas-app">aquí</a>.
+        </p>
       </div>
     </div>
-
   </div>
 </template>
 
 
 <script>
-
-import vueRouter from 'vue-router'
+import vueRouter from "vue-router";
 
 export default {
   name: "App",
 
-  data: function() {
+  data: function () {
     return {
-      is_auth: localStorage.getItem('isAuth') || false
-    }
+      is_auth: localStorage.getItem("isAuth") || false,
+    };
   },
 
-  components: {
-
-  },
+  components: {},
 
   methods: {
     //Verifica si el usuario está autenticado, si lo está lo dirige a su página principal y si no a la página de autenticación.
-    updateAuth: function() {
-      var self = this
-      self.is_auth = localStorage.getItem('isAuth') || false
+    updateAuth: function () {
+      console.log("Entro");
+      var self = this;
+      self.is_auth = localStorage.getItem("isAuth") || false;
 
-      if (self.is_auth == false)
-        self.$router.push({name: "user_auth"})
-      else {
-        let username = localStorage.getItem("current_username")
-        self.$router.push({name: "user", params: {username: username}})
+      if (self.is_auth == false) {
+        self.$router.push({ name: "user_auth" });
+        console.log("Verdadero");
+      } else {
+        let username = localStorage.getItem("current_username");
+        self.$router.push({ name: "user", params: { username: username } });
+        console.log("Falso");
       }
-      
     },
 
     //Actualiza el localStorage con el usuario autenticado verdadero y su username
-    login: function(username) {
-      localStorage.setItem('current_username', username)
-      localStorage.setItem('isAuth', true)
-      this.updateAuth()
+    login: function (username) {
+      localStorage.setItem("current_username", username);
+      localStorage.setItem("isAuth", true);
+      this.updateAuth();
     },
 
     //Elimina de localStorage el usuario autenticado y su username.
-    logout: function() {
-      localStorage.removeItem('isAuth')
-      localStorage.removeItem('current_username')
-      this.updateAuth()
+    logout: function () {
+      localStorage.removeItem("isAuth");
+      localStorage.removeItem("current_username");
+      this.updateAuth();
     },
 
     init: function () {
       if (this.$route.name != "user_auth") {
-        this.$router.push({ name: "user_auth"});
+        this.$router.push({ name: "user_auth" });
       }
     },
 
@@ -86,20 +103,23 @@ export default {
         this.$router.push({ name: "user_register" });
       }
     },
+  },
 
-    //Dirige a root y después verifica si hay un usuario autenticado
-    created: function () {
-      this.$router.push({name: "root"})
-      this.updateAuth()
-    },
+  //Dirige a root y después verifica si hay un usuario autenticado
+  created: function () {
+    console.log("Creado");
+    this.$router.push({ name: "root" });
+    console.log("Push 1 negativo");
+    this.updateAuth();
+    console.log("Push 2 negativo");
   },
 };
 </script>
 
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 * {
   padding: 0;
@@ -158,8 +178,8 @@ nav ul li a.register-menu {
 }
 
 .logout-menu {
-  color: #F1522F;
-  border-color: #F1522F;
+  color: #f1522f;
+  border-color: #f1522f;
 }
 
 a:hover {
