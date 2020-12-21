@@ -1,13 +1,13 @@
 <template>
-  <div id="login">
-    <div id="mensaje">
-      <h1 class="title">Iniciar Sesión</h1>
-      <h4 id="subtitle">Inicia sesión para seguir mejorando tus finanzas</h4>
+  <div class="formulario">
+    <div class="titulos">
+      <h1 class="titulo-formulario">Iniciar Sesión</h1>
+      <h4 class="subtitulo-formulario">Inicia sesión para seguir mejorando tus finanzas</h4>
     </div>
     <div id="formSesion">
       <form class="form" v-on:submit.prevent="processAuthUser">
         <label for="username">Usuario</label>
-        <input id="username" v-model="user_in.username" type="text"/>
+        <input class="campo-texto" v-model="user_in.username" type="text"/>
         <label for="password">Contraseña</label>
         <input
           id="password"
@@ -17,7 +17,7 @@
         <input type="submit" value="Ingresar" id="enviar"/>
       </form>
     </div>
-    <div id="opcion">
+    <div class="opcion">
       <p>¿No tienes una cuenta?</p>
       <router-link :to="'/register'" class="secondButton">Registrarme</router-link
       >
@@ -27,6 +27,7 @@
 
 <script>
 import axios from'axios';
+
 export default {
   name: 'UserAuth',
   data: function() {
@@ -43,16 +44,16 @@ export default {
             var self = this
             axios.post("https://api-misfinanzas.herokuapp.com/users/auth/", self.user_in,  {headers: {}})
                 .then((result) => {
-                    //alert("Autenticación Exitosa");
-                    this.$router.push('/welcome/' + self.user_in.username);
+                    alert("Autenticación Exitosa");
+                    self.$emit('log-in', self.user_in.username)
                 })
                 .catch((error) => {
                     
                     if (error.response.status == "404")
-                        alert("ERROR 404: Usuario no encontrado.");
+                        alert("Usuario no encontrado.");
                     
                     if (error.response.status == "403")
-                        alert("ERROR 403: Contraseña Erronea.");
+                        alert("Contraseña incorrecta.");
                 });
         }
     }
@@ -60,7 +61,7 @@ export default {
 </script>
 
 <style>
-#login {
+.formulario {
   margin-top: 98px;
   margin-right: auto;
   margin-left: auto;
@@ -72,17 +73,17 @@ export default {
   z-index: 1;
 }
 
-#mensaje {
+.titulos {
   padding-top: 36px;
   text-align: center;
 }
 
-h1 .title {
+.titulo-formulario{
   font-size: 36px;
   font-weight: bold;
 }
 
-#subtitle {
+.subtitulo-formulario{
   font-size: 16px;
   font-weight: 500;
   opacity: 0.5;
@@ -125,13 +126,13 @@ input[type="submit"] {
   padding: 35px 24px 36px 24px;
 }
 
-label[for="user"],
+label[for="username"],
 label[for="password"] {
   font-weight: 500;
   font-size: 18px;
 }
 
-#opcion {
+.opcion {
   text-align: center;
   font-weight: 500;
   padding-bottom: 24px;

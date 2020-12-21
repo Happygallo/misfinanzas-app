@@ -5,15 +5,15 @@
       <nav>
         <img src="./assets/logo.png" alt="MisFinanzas Logo" class="logo" v-on:click="init"/>
         <ul>
-          <li><a class="login-menu" v-on:click="init" v-if="is_auth">Iniciar Sesión</a></li>
-          <li><a class="register-menu" v-on:click="register" v-if="is_auth">Registrarse</a></li>
+          <li><a class="login-menu" v-on:click="init" v-if="!is_auth">Iniciar Sesión</a></li>
+          <li><a class="register-menu" v-on:click="register" v-if="!is_auth">Registrarse</a></li>
           <li><a class="logout-menu" v-on:click="logout" v-if="is_auth">Cerrar Sesión</a></li>
         </ul>
       </nav>
     </div>
 
     <div class="main-component">
-      <router-view></router-view>
+      <router-view v-on:log-in="login"></router-view>
     </div>
 
     <div class="background"></div>
@@ -21,7 +21,7 @@
     <div class="footer">
       <div class="copyright">
         <p>Copyright (c) Mis Finanzas 2020</p>
-        <p>Proyecto final para el Ciclo 3 de MisiónTIC 2022. Conoce más <a href="https://github.com/Happygallo/misfinanzas-app">aquí</a></p>
+        <p id="subtitulo-footer">Proyecto final para el Ciclo 3 de MisiónTIC 2022, conoce más <a href="https://github.com/Happygallo/misfinanzas-app">aquí</a>.</p>
       </div>
     </div>
 
@@ -49,11 +49,12 @@ export default {
   methods: {
     //Verifica si el usuario está autenticado, si lo está lo dirige a su página principal y si no a la página de autenticación.
     updateAuth: function() {
-      var self = thisself.is_auth = localStorage.getItem('isAuth') || false
+      var self = this
+      self.is_auth = localStorage.getItem('isAuth') || false
 
-      if (self.is_auth == false) {
+      if (self.is_auth == false)
         self.$router.push({name: "user_auth"})
-      } else {
+      else {
         let username = localStorage.getItem("current_username")
         self.$router.push({name: "user", params: {username: username}})
       }
@@ -62,7 +63,7 @@ export default {
 
     //Actualiza el localStorage con el usuario autenticado verdadero y su username
     login: function(username) {
-      localStorage.setItem('current_username')
+      localStorage.setItem('current_username', username)
       localStorage.setItem('isAuth', true)
       this.updateAuth()
     },
@@ -75,15 +76,14 @@ export default {
     },
 
     init: function () {
-      if (this.$route.name != "user") {
-        let username = localStorage.getItem("current_username")
-        this.$router.push({ name: "user", params: {username: username}});
+      if (this.$route.name != "user_auth") {
+        this.$router.push({ name: "user_auth"});
       }
     },
 
     register: function () {
       if (this.$route.name != "register") {
-        this.$router.push({ name: "register" });
+        this.$router.push({ name: "user_register" });
       }
     },
 
@@ -99,6 +99,7 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 * {
   padding: 0;
@@ -142,6 +143,7 @@ nav ul li a {
   border-width: 2px;
   border-style: solid;
   border-color: #4a67ff;
+  cursor: pointer;
 }
 
 nav ul li a.login-menu {
@@ -155,6 +157,11 @@ nav ul li a.register-menu {
   font-weight: 500;
 }
 
+.logout-menu {
+  color: #F1522F;
+  border-color: #F1522F;
+}
+
 a:hover {
   opacity: 0.5;
 }
@@ -162,7 +169,7 @@ a:hover {
 .background {
   position: absolute;
   background-color: #4a67ff;
-  height: 360px;
+  height: 280px;
   margin: 0 auto;
   width: 100%;
   top: 96px;
@@ -175,9 +182,14 @@ a:hover {
   width: 100%;
   color: black;
   text-align: center;
-  line-height: 100px;
+  padding: 50px 0;
+  line-height: 2em;
   font-weight: medium;
   font-size: 14px;
   background-color: white;
+}
+
+#subtitulo-footer {
+  color: rgba(0, 0, 0, 0.6);
 }
 </style>

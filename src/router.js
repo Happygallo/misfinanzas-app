@@ -41,7 +41,7 @@ const router = new vueRouter({
         },
         {
             //path: '/new_movement/:username',
-            path: '/user/new_movement/:username',
+            path: '/user/movement/:username',
             name: "user_movement",
             component: UserMovement
         }
