@@ -19,8 +19,7 @@
     </div>
     <div class="opcion">
       <p>¿No tienes una cuenta?</p>
-      <router-link :to="'/register'" class="secondButton">Registrarme</router-link
-      >
+      <a v-on:click="register" class="secondButton">Registrarme</a>
     </div>
   </div>
 </template>
@@ -55,7 +54,13 @@ export default {
                     if (error.response.status == "403")
                         alert("Contraseña incorrecta.");
                 });
-        }
+        },
+
+        register: function () {
+          if (this.$route.name != "register") {
+          this.$router.push({ name: "user_register" });
+          }
+        },
     }
 }
 </script>
@@ -140,6 +145,7 @@ label[for="password"] {
 
 .secondButton {
   line-height: 2;
-  color: #4a67ff;
+  color: #3FCC88;
+  cursor: pointer;
 }
 </style>

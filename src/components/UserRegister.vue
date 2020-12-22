@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import vueRouter from "vue-router";
 import axios from "axios";
 export default {
   name: "UserRegister",
@@ -49,8 +50,8 @@ export default {
         axios
           .post("https://api-misfinanzas.herokuapp.com/users/", self.user_in, { headers: {} })
           .then((result) => {
-            //alert("Autenticación Exitosa");
-            this.$router.push("/login");
+            alert("Usuario creado exitósamente");
+            self.$router.push({ name: "user_auth"});
           })
           .catch((error) => {
             if (error.response.status == "404") alert("Ingrese un usuario");
@@ -143,6 +144,11 @@ label[for="password"] {
 
 .secondButton {
   line-height: 2;
-  color: #4a67ff;
+  color: #3FCC88;
+  cursor: pointer;
+}
+
+.secondButton:hover{
+  opacity: 0.6;
 }
 </style>

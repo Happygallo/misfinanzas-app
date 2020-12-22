@@ -23,27 +23,27 @@
     <div id="resumen-inferior">
       <div id="botones">
         <li>
-          <a href="/user/movement/:username" class="accion" id="boton-gasto"
+          <a v-on:click="newMovement" class="accion" id="boton-gasto"
             ><span class="material-icons">add_circle_outline</span> Nuevo
             Gasto</a
           >
         </li>
         <li>
-          <a href="/user/budget/:username" class="accion" id="boton-presupuesto"
+          <a v-on:click="newBudget" class="accion" id="boton-presupuesto"
             ><span class="material-icons">attach_money</span> Presupuesto</a
           >
         </li>
       </div>
       <div id="movimientos">
         <h2 id="tus-gastos">Tus Gastos</h2>
-        <div class="tarjeta-movimiento">
+        <div class="tarjeta-movimiento" v-for="(value, index) in movimientos" v-bind:key="index">
           <div class="valores">
-            <p id="valor-gasto">$0{{ valor }}</p>
-            <p id="fecha-gasto">01/01/01 {{ fecha }}</p>
+            <p id="valor-gasto">${{ value.amount }}</p>
+            <p id="fecha-gasto">{{ value.date }}</p>
           </div>
           <div class="concepto">
             <p id="titulo-concepto">Concepto</p>
-            <p id="concepto">Mercado {{ concepto }}</p>
+            <p id="concepto">{{ value.concept }}</p>
           </div>
         </div>
       </div>
@@ -58,11 +58,28 @@ export default {
 
   data: function () {
     return {
-      user_in: {
         username: "",
-        password: "",
-      },
+        presupuesto: 0,
+        gastos: 0,
+        restante: 0,
+        movimientos: [{
+          amount: 0,
+          date: "21/12/2020",
+          concept: "Descripción"
+        }]
     };
+  },
+
+  methods: {
+    newMovement: function() {
+      let username = localStorage.getItem("current_username")
+      this.$router.push({name: "user_movement", params:{ username: username }})
+    },
+
+    newBudget: function() {
+      let username = localStorage.getItem("current_username")
+      this.$router.push({name: "user_budget", params:{ username: username }})
+    },
   },
 
   created: function () {
@@ -70,7 +87,12 @@ export default {
     let self = this;
     axios
       .get("https://api-misfinanzas.herokuapp.com/users/" + this.username)
-      .then((result) => {})
+      .then((result) => {
+        self.presupuesto = result.data.budget
+        self.gastos = result.data.gastos
+        self.restante = result.data.restante
+        self.movimientos = result.data.movimientos
+      })
       .catch((error) => {
         alert("ERRORServidor");
       });
@@ -135,6 +157,7 @@ export default {
   margin: 12px 8px;
   width: 230px;
   display: flex;
+  cursor: pointer;
 }
 
 #boton-presupuesto {

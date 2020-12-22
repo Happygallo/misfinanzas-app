@@ -5,20 +5,74 @@
       <h4 class="subtitulo-formulario">Llena los campos para añadir un nuevo gasto</h4>
     </div>
     <div>
-      <form class="form" v-on:submit.prevent="processAuthUser">
+      <form class="form" v-on:submit.prevent="processMovement">
         <label class="entrada-texto" for="concept">Concepto</label>
-        <input class="campo-texto" type="text" />
+        <input class="campo-texto" type="text" v-model="concept"/>
         <label class="entrada-texto" for="price">Valor</label>
-        <input class="campo-texto" type="int" />
+        <input class="campo-texto" type="text" v-model="amount" />
 
-        <input type="submit" value="Actualizar" id="enviar" />
+        <input type="submit" value="Añadir Gasto" id="enviar" />
       </form>
     </div>
     <div class="opcion">
-      <li><a class="boton-cancelar" href="/user/:username">Cancelar</a></li>
+      <li><a class="boton-cancelar" v-on:click="cancel">Cancelar</a></li>
     </div>
   </div>
 </template>
+
+<script>
+import axios from "axios";
+export default {
+  name: "User",
+
+  data: function () {
+    return {
+      movement_in: {
+        username: "test",
+        concept: "123",
+        amount: "0",
+      },
+    };
+  },
+
+  methods: {
+    processMovement: function() {
+      var self = this
+      let movement = {
+                id: 10,
+                username: this.username,
+                concept: this.concept,
+                amount: this.amount,
+
+            }
+      console.log("movement_in")
+      axios.post("https://api-misfinanzas.herokuapp.com/movements/add", movement,  {headers: {}})
+      .then((result) => {
+        alert("Presupuesto establecido");
+        self.$router.push({ name: "user"});
+      })
+      .catch((error) => {
+          alert("Error");
+      });
+    },
+
+    cancel: function() {
+      this.$router.push({name: "user"})
+    },
+  },
+
+  created: function () {
+    this.username = this.$route.params.username;
+    let self = this;
+    axios
+      .get("https://api-misfinanzas.herokuapp.com/users/" + this.username)
+      .then((result) => {})
+      .catch((error) => {
+        alert("ERRORServidor");
+      });
+  },
+};
+</script>
 
 <style>
 .formularios {
@@ -103,5 +157,6 @@ input[type="submit"] {
 
 .boton-cancelar {
   color: #f1522f;
+  cursor: pointer;
 }
 </style>

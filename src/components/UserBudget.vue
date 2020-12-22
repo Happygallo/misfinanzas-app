@@ -5,17 +5,72 @@
       <h4 class="subtitulo-formulario">Establece tu presupuesto del mes</h4>
     </div>
     <div>
-      <form class="form" v-on:submit.prevent="processAuthUser">
+      <form class="form" v-on:submit.prevent="processBudget">
         <label class="entrada-texto" for="budget">Cantidad</label>
-        <input class="campo-texto" type="int" />
-        <input type="submit" value="Establecer" id="enviar" />
+        <input class="campo-texto" type="text" v-model="budget"/>
+        <input type="submit" value="Establecer Presupuesto" id="enviar" />
       </form>
     </div>
     <div class="opcion">
-      <li><a class="boton-cancelar" href="/user/:username">Cancelar</a></li>
+      <li><a class="boton-cancelar" v-on:click="cancel">Cancelar</a></li>
     </div>
   </div>
 </template>
+
+<script>
+import axios from "axios";
+export default {
+  name: "User",
+
+  data: function () {
+    return {
+        username: "",
+        budget: "0",
+    };
+  },
+
+  methods: {
+    processBudget: function() {
+      var self = this
+      let establish = {
+                username: this.username,
+                budget: this.budget
+            }
+            console.log(establish)
+      axios.post("https://api-misfinanzas.herokuapp.com/users/budget", establish,  {headers: {}})
+      .then((result) => {
+        alert("Presupuesto establecido");
+        this.$router.push({name: "user"})
+      })
+      .catch((error) => {
+        if (error.response.status == "404")
+          alert("Usuario no encontrado.");
+        
+        if (error.response.status == "403")
+          alert("Contraseña incorrecta.");
+      });
+    },
+
+    cancel: function() {
+      this.$router.push({name: "user"})
+    },
+  },
+
+  created: function () {
+    this.username = this.$route.params.username;
+    let self = this;
+    axios
+      .get("https://api-misfinanzas.herokuapp.com/users/budget?username=" + this.username)
+      .then((result) => {
+        console.log(result.data.budget)
+        self.budget = result.data.budget
+      })
+      .catch((error) => {
+        alert("Error Servidor");
+      });
+  },
+};
+</script>
 
 <style>
 .formularios {
@@ -100,5 +155,6 @@ input[type="submit"] {
 
 .boton-cancelar {
   color: #f1522f;
+  cursor: pointer;
 }
 </style>

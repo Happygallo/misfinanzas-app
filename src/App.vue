@@ -64,17 +64,14 @@ export default {
   methods: {
     //Verifica si el usuario está autenticado, si lo está lo dirige a su página principal y si no a la página de autenticación.
     updateAuth: function () {
-      console.log("Entro");
       var self = this;
       self.is_auth = localStorage.getItem("isAuth") || false;
 
       if (self.is_auth == false) {
         self.$router.push({ name: "user_auth" });
-        console.log("Verdadero");
       } else {
         let username = localStorage.getItem("current_username");
         self.$router.push({ name: "user", params: { username: username } });
-        console.log("Falso");
       }
     },
 
@@ -167,7 +164,8 @@ nav ul li a {
 }
 
 nav ul li a.login-menu {
-  color: #4a67ff;
+  color: #3FCC88;
+  border-color: #3FCC88;
   background-color: white;
 }
 
