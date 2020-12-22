@@ -45,7 +45,7 @@ export default {
                 amount: this.amount,
 
             }
-      axios.post("http://localhost:8000/movements/add", movement,  {headers: {}})
+      axios.post("https://api-misfinanzas.herokuapp.com/movements/add", movement,  {headers: {}})
       .then((result) => {
         alert("Presupuesto establecido");
         self.$router.push({ name: "user"});
@@ -64,7 +64,7 @@ export default {
     this.username = this.$route.params.username;
     let self = this;
     axios
-      .get("http://localhost:8000/users/" + this.username)
+      .get("https://api-misfinanzas.herokuapp.com/users/" + this.username)
       .then((result) => {})
       .catch((error) => {
         alert("ERRORServidor");

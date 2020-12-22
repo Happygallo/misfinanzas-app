@@ -86,7 +86,7 @@ export default {
     this.username = this.$route.params.username;
     let self = this;
     axios
-      .get("http://localhost:8000/users/" + this.username)
+      .get("https://api-misfinanzas.herokuapp.com/users/" + this.username)
       .then((result) => {
         self.presupuesto = result.data.budget
         self.gastos = result.data.gastos

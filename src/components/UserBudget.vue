@@ -36,7 +36,7 @@ export default {
                 username: this.username,
                 budget: this.budget
             }
-      axios.post("http://localhost:8000/users/budget", establish,  {headers: {}})
+      axios.post("https://api-misfinanzas.herokuapp.com/users/budget", establish,  {headers: {}})
       .then((result) => {
         alert("Presupuesto establecido");
         this.$router.push({name: "user"})
@@ -59,7 +59,7 @@ export default {
     this.username = this.$route.params.username;
     let self = this;
     axios
-      .get("http://localhost:8000/users/budget?username=" + this.username)
+      .get("https://api-misfinanzas.herokuapp.com/users/budget?username=" + this.username)
       .then((result) => {
         self.budget = result.data.budget
       })

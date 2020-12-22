@@ -48,7 +48,7 @@ export default {
         alert("Ingrese una contraseña");
       } else {
         axios
-          .post("http://localhost:8000/users/", self.user_in, { headers: {} })
+          .post("https://api-misfinanzas.herokuapp.com/users/", self.user_in, { headers: {} })
           .then((result) => {
             alert("Usuario creado exitósamente");
             self.$router.push({ name: "user_auth"});
