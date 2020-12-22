@@ -36,6 +36,7 @@ export default {
                 username: this.username,
                 budget: this.budget
             }
+            console.log(establish)
       axios.post("https://api-misfinanzas.herokuapp.com/users/budget", establish,  {headers: {}})
       .then((result) => {
         alert("Presupuesto establecido");
@@ -59,11 +60,13 @@ export default {
     this.username = this.$route.params.username;
     let self = this;
     axios
-      .get("https://api-misfinanzas.herokuapp.com/users/budget?username=" + this.username)
+      .get("https://api-misfinanzas.herokuapp.com/users/" + this.username)
       .then((result) => {
+        console.log(result.data.budget)
         self.budget = result.data.budget
       })
       .catch((error) => {
+        alert("Error Servidor");
       });
   },
 };
